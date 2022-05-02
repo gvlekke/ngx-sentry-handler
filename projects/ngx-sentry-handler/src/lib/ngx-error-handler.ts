@@ -18,21 +18,23 @@ export class NgxErrorHandler extends ErrorHandler {
    * @param - The module options.
    */
   public constructor(
-    @Inject(OPTIONS) private readonly options: ModuleOptions,
-    @Inject(SENTRY_SERVICE) private sentryService: SentryService
+    private sentryService: SentryService,
+    @Inject(OPTIONS) private options: ModuleOptions
   ) {
     super();
-    if (!this.sentryService) {
-      throw new Error(
-        'You must provide a sentry service, you can use the default ServiceService'
-      );
-    }
+    console.log({ options });
   }
 
   /**
    * Method called for every value captured through the ErrorHandler
    */
   public handleError(error: unknown): void {
+    if (!this.sentryService) {
+      throw new Error(
+        'You must provide a sentry service, you can use the default ServiceService'
+      );
+    }
+
     const extractedError = this._extractError(error);
 
     // // Capture handled exception and send it to Sentry.

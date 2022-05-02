@@ -3,6 +3,7 @@ import { ErrorHandler, Injectable, ModuleWithProviders } from '@angular/core';
 import { init, showReportDialog } from '@sentry/browser';
 import { ModuleOptions } from './interfaces/module-options';
 import { NgxErrorHandler } from './ngx-error-handler';
+import { SentryService } from './sentry.service';
 import { INITIALIZER, OPTIONS } from './tokens';
 
 /**
@@ -55,10 +56,10 @@ export class NgxSentryHandlerModule {
           useFactory: initializer,
           deps: [OPTIONS],
         },
+        SentryService,
         {
           provide: ErrorHandler,
           useClass: NgxErrorHandler,
-          deps: [OPTIONS, INITIALIZER],
         },
       ],
     };

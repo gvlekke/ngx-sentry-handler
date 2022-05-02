@@ -27,7 +27,7 @@ export class YourSentryService extends SentryService {
       logErrors: true,
     }),
   ],
-  providers: [{ provide: SENTRY_SERVICE, useExisting: YourSentryService }],
+  providers: [{ provide: SentryService, useClass: YourSentryService }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
