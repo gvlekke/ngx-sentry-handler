@@ -22,7 +22,6 @@ export class NgxErrorHandler extends ErrorHandler {
     @Inject(OPTIONS) private options: ModuleOptions
   ) {
     super();
-    console.log({ options });
   }
 
   /**
