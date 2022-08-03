@@ -2,7 +2,6 @@ import { Injectable, Inject, ErrorHandler, Injector } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ModuleOptions } from './interfaces/module-options';
 import { OPTIONS, SENTRY_SERVICE } from './tokens';
-import { runOutsideAngular } from './zone';
 import { SentryService } from './sentry.service';
 
 /**
@@ -28,18 +27,7 @@ export class NgxErrorHandler extends ErrorHandler {
    * Method called for every value captured through the ErrorHandler
    */
   public handleError(error: unknown): void {
-    if (!this.sentryService) {
-      throw new Error(
-        'You must provide a sentry service, you can use the default ServiceService'
-      );
-    }
-
     const extractedError = this._extractError(error);
-
-    // // Capture handled exception and send it to Sentry.
-    // const eventId = runOutsideAngular(() =>
-    //   Sentry.captureException(extractedError)
-    // );
 
     if (this.options.browserOptions.enabled) {
       this.sentryService.captureException(extractedError);
